@@ -49,3 +49,12 @@ export const deleteEmployee = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+export const getEmployeeById = async (req, res) => {
+  try {
+    const response = await employeeModel.findById(req.params.id);
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
