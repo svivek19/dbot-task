@@ -127,7 +127,6 @@ const AddEmployee = () => {
               value={form.name}
               onChange={handleChange}
               className="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none"
-              required
             />
           </div>
           <div>
@@ -140,7 +139,6 @@ const AddEmployee = () => {
               value={form.email}
               onChange={handleChange}
               className="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none"
-              required
             />
           </div>
           <div>
@@ -154,7 +152,6 @@ const AddEmployee = () => {
               value={form.phone}
               onChange={handleChange}
               className="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none"
-              required
             />
           </div>
           <div>
@@ -167,7 +164,6 @@ const AddEmployee = () => {
               value={form.bankAccount}
               onChange={handleChange}
               className="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none"
-              required
             />
           </div>
         </div>
@@ -186,7 +182,6 @@ const AddEmployee = () => {
                 value={form.salary.basic}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none"
-                required
               />
             </div>
             <div>
@@ -199,7 +194,6 @@ const AddEmployee = () => {
                 value={form.salary.hra}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none"
-                required
               />
             </div>
             <div>
@@ -212,7 +206,6 @@ const AddEmployee = () => {
                 value={form.salary.pf}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none"
-                required
               />
             </div>
             <div>
@@ -225,7 +218,6 @@ const AddEmployee = () => {
                 value={form.salary.deductions}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none"
-                required
               />
             </div>
             <div>
@@ -240,14 +232,13 @@ const AddEmployee = () => {
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-700"
                 readOnly
                 disabled
-                required
               />
             </div>
           </div>
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition outline-none"
+          className="w-full bg-slate-800 text-white py-3 rounded-lg font-semibold hover:bg-slate-400     hover:text-slate-900 transition outline-none cursor-pointer"
         >
           {id ? "Update" : "Submit"}
         </button>

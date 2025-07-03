@@ -2,19 +2,27 @@ import employeeModel from "../models/employee.model.js";
 
 export const createEmployee = async (req, res) => {
   try {
-    const { name, email, phone, bankAccount, salary } = req.body;
-    salary.netSalary =
-      salary.basic + salary.hra - (salary.pf + salary.deductions);
+    const { name, email, phone, bankAccount, salary = {} } = req.body;
+
+    const basic = +salary.basic || 0;
+    const hra = +salary.hra || 0;
+    const pf = +salary.pf || 0;
+    const deductions = +salary.deductions || 0;
+
+    const netSalary = basic + hra - (pf + deductions);
+
     const emp = await employeeModel.create({
       name,
       email,
       phone,
       bankAccount,
-      salary,
+      salary: { ...salary, basic, hra, pf, deductions, netSalary },
     });
-    res.status(201).json(emp);
+
+    return res.status(201).json(emp);
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    console.error(err);
+    return res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -29,14 +37,31 @@ export const getEmployees = async (req, res) => {
 
 export const updateEmployee = async (req, res) => {
   try {
-    const { salary } = req.body;
-    salary.netSalary =
-      salary.basic + salary.hra - (salary.pf + salary.deductions);
+    const { salary = {} } = req.body;
+
+    const basic = Number(salary.basic) || 0;
+    const hra = Number(salary.hra) || 0;
+    const pf = Number(salary.pf) || 0;
+    const deductions = Number(salary.deductions) || 0;
+
+    const netSalary = basic + hra - (pf + deductions);
+
+    req.body.salary = {
+      ...salary,
+      basic,
+      hra,
+      pf,
+      deductions,
+      netSalary,
+    };
+
     const emp = await employeeModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
+
     res.json(emp);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 };

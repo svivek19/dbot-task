@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { Pencil, Trash2 } from "lucide-react";
 import { confirmDialog } from "../components/ConfirmToast";
+import { exportEmployeesToPdf, exportEmployeesToXlsx } from "../utils/export";
 
 export default function EmployeeList() {
   const [employees, setEmployees] = useState([]);
@@ -35,7 +36,25 @@ export default function EmployeeList() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-lg md:text-xl font-semibold">Employees</h1>
+      <div className="flex justify-between flex-wrap gap-4">
+        <h1 className="text-lg md:text-xl font-semibold">Employees</h1>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={() => exportEmployeesToXlsx(employees)}
+            className="px-3 py-1 rounded bg-green-600 hover:bg-green-700 text-white text-xs md:text-sm"
+          >
+            Download Excel
+          </button>
+
+          <button
+            onClick={() => exportEmployeesToPdf(employees)}
+            className="px-3 py-1 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-xs md:text-sm"
+          >
+            Download PDF
+          </button>
+        </div>
+      </div>
 
       {employees.length === 0 ? (
         <div className="text-center text-red-500 py-8">No employees found.</div>
@@ -43,7 +62,8 @@ export default function EmployeeList() {
         <div className="rounded-lg shadow ring-1 ring-gray-200 overflow-x-auto">
           <table className="w-full text-xs md:text-sm bg-white ">
             <thead>
-              <tr className="bg-slate-100 text-left sticky top-0">
+              <tr className="bg-slate-800 text-white text-left sticky top-0">
+                <th className="p-2 md:px-4">#</th>
                 <th className="p-2 md:px-4">Name</th>
                 <th className="p-2 md:px-4">Email</th>
                 <th className="p-2 md:px-4">Phone</th>
@@ -60,12 +80,13 @@ export default function EmployeeList() {
             </thead>
 
             <tbody>
-              {employees.map((emp) => (
+              {employees.map((emp, index) => (
                 <tr
                   key={emp._id}
                   className="border-t hover:bg-slate-50 transition-colors"
                 >
-                  <td className="p-2 md:px-4">{emp.name}</td>
+                  <td className="p-2 md:px-4">{index + 1}</td>
+                  <td className="p-2 md:px-4 capitalize">{emp.name}</td>
                   <td className="p-2 md:px-4">{emp.email}</td>
                   <td className="p-2 md:px-4">{emp.phone}</td>
                   <td className="p-2 md:px-4 hidden md:table-cell">
@@ -85,7 +106,6 @@ export default function EmployeeList() {
                     {emp.salary?.netSalary}
                   </td>
                   <td className="p-2 md:px-4 text-center">
-                    {/* stack buttons horizontally, shrink on mobile */}
                     <div className="flex items-center justify-center gap-1 md:gap-2">
                       <Link
                         to={`/employees/edit/${emp._id}`}
